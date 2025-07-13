@@ -1,8 +1,11 @@
 const express = require('express');
-const { register, login } = require('../controllers/authController');
 const router = express.Router();
+const { login } = require('../controllers/authController');
 
-router.post('/register', register);
+// 👉 POST /api/auth/login
 router.post('/login', login);
+
+// ✅ If user registration is not needed, remove or disable it
+// router.post('/register', register); // disabled for admin-only system
 
 module.exports = router;

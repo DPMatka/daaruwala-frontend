@@ -20,7 +20,6 @@ const Header = ({ cartItemCount }) => (
       </Link>
       <nav style={{ display: "flex", gap: "2rem" }}>
         <Link to="/" style={{ color: "#222", textDecoration: "none" }}>Home</Link>
-        <Link to="/order" style={{ color: "#222", textDecoration: "none" }}>Order Online</Link>
         <Link to="/login" style={{ color: "#222", textDecoration: "none" }}>Login</Link>
         <Link to="/cart" style={{ color: "#222", textDecoration: "none", position: "relative" }}>
           🛒

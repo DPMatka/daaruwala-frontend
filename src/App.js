@@ -9,6 +9,7 @@ import OrderConfirmation from './pages/OrderConfirmation';
 import MyOrders from './pages/MyOrders';
 import ProductDetail from './pages/ProductDetail';
 import Checkout from './pages/Checkout';
+import Profile from './pages/Profile'; // ✅ NEW
 
 const App = () => {
   const [cart, setCart] = useState([]);
@@ -42,6 +43,7 @@ const App = () => {
         <Route path="/" element={<Home addToCart={addToCart} />} />
         <Route path="/product/:productId" element={<ProductDetail addToCart={addToCart} />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/profile" element={<Profile />} /> {/* ✅ NEW */}
         <Route path="/cart" element={<ShoppingCart cart={cart} setCart={setCart} />} />
         <Route path="/checkout" element={<Checkout cart={cart} clearCart={clearCart} />} />
         <Route path="/order-confirmation" element={<OrderConfirmation />} />

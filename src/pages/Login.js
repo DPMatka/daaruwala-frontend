@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const API_URL = "https://daaruwala-backend-5i6g.onrender.com/api/auth";
 
@@ -6,6 +7,7 @@ const Login = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [form, setForm] = useState({ email: "", password: "", name: "", phone: "" });
   const [message, setMessage] = useState("");
+  const navigate = useNavigate();
 
   const handleChange = e => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -24,9 +26,11 @@ const Login = () => {
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || "Something went wrong");
       if (isLogin) {
-        // Save token or user info if needed
         localStorage.setItem("user", JSON.stringify(data));
         setMessage("Login successful!");
+        setTimeout(() => {
+          navigate("/"); // Redirect to home after login
+        }, 1000);
       } else {
         setMessage("Registration successful! Please login.");
         setIsLogin(true);

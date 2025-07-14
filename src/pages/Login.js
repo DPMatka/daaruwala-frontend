@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 
-const API_URL = "https://daaruwala-backend-5i6g.onrender.com/api/users";
+const API_URL = "https://daaruwala-backend-5i6g.onrender.com/api/auth";
 
 const Login = () => {
   const [isLogin, setIsLogin] = useState(true);
-  const [form, setForm] = useState({ email: "", password: "", name: "" });
+  const [form, setForm] = useState({ email: "", password: "", name: "", phone: "" });
   const [message, setMessage] = useState("");
 
   const handleChange = e => {
@@ -15,7 +15,7 @@ const Login = () => {
     e.preventDefault();
     setMessage("");
     try {
-      const endpoint = isLogin ? "/login" : "/register";
+      const endpoint = isLogin ? "/user-login" : "/register";
       const res = await fetch(API_URL + endpoint, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -86,17 +86,30 @@ const Login = () => {
           </button>
         </div>
         {!isLogin && (
-          <div style={{ marginBottom: "1rem" }}>
-            <input
-              type="text"
-              name="name"
-              placeholder="Name"
-              value={form.name}
-              onChange={handleChange}
-              required
-              style={{ width: "100%", padding: "0.7rem", borderRadius: "6px", border: "1px solid #ccc" }}
-            />
-          </div>
+          <>
+            <div style={{ marginBottom: "1rem" }}>
+              <input
+                type="text"
+                name="name"
+                placeholder="Name"
+                value={form.name}
+                onChange={handleChange}
+                required
+                style={{ width: "100%", padding: "0.7rem", borderRadius: "6px", border: "1px solid #ccc" }}
+              />
+            </div>
+            <div style={{ marginBottom: "1rem" }}>
+              <input
+                type="text"
+                name="phone"
+                placeholder="Phone Number"
+                value={form.phone}
+                onChange={handleChange}
+                required
+                style={{ width: "100%", padding: "0.7rem", borderRadius: "6px", border: "1px solid #ccc" }}
+              />
+            </div>
+          </>
         )}
         <div style={{ marginBottom: "1rem" }}>
           <input

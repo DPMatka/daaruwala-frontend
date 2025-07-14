@@ -1,34 +1,40 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const Header = ({ cartItemCount }) => {
-  return (
-    <header className="bg-gray-900 text-white shadow-md">
-      <div className="container mx-auto flex justify-between items-center py-4 px-6">
-        <Link to="/" className="text-2xl font-bold tracking-wide">
-          DaaruWala
+const Header = ({ cartItemCount }) => (
+  <header style={{
+    background: "#fff",
+    borderBottom: "1px solid #eee",
+    padding: "0.5rem 0",
+    marginBottom: "2rem"
+  }}>
+    <div style={{
+      maxWidth: "1200px",
+      margin: "0 auto",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "space-between"
+    }}>
+      <Link to="/" style={{ fontWeight: "bold", fontSize: "1.7rem", color: "#7c1c4b", textDecoration: "none" }}>
+        DaaruWala
+      </Link>
+      <nav style={{ display: "flex", gap: "2rem" }}>
+        <Link to="/" style={{ color: "#222", textDecoration: "none" }}>Home</Link>
+        <Link to="/order" style={{ color: "#222", textDecoration: "none" }}>Order Online</Link>
+        <Link to="/login" style={{ color: "#222", textDecoration: "none" }}>Login</Link>
+        <Link to="/cart" style={{ color: "#222", textDecoration: "none", position: "relative" }}>
+          🛒
+          {cartItemCount > 0 && (
+            <span style={{
+              position: "absolute", top: "-8px", right: "-12px",
+              background: "#a21caf", color: "#fff", borderRadius: "50%",
+              fontSize: "0.8rem", padding: "2px 6px"
+            }}>{cartItemCount}</span>
+          )}
         </Link>
-        <nav className="flex gap-6">
-          <Link to="/category/whiskey" className="hover:text-purple-400">Whiskey</Link>
-          <Link to="/category/rum" className="hover:text-purple-400">Rum</Link>
-          <Link to="/category/beer" className="hover:text-purple-400">Beer</Link>
-          <Link to="/category/cigarette" className="hover:text-purple-400">Cigarette</Link>
-        </nav>
-        <div className="flex items-center gap-4">
-          <Link to="/login" className="bg-purple-600 hover:bg-purple-700 px-4 py-2 rounded text-white">Login</Link>
-          <Link to="/register" className="bg-gray-700 hover:bg-gray-800 px-4 py-2 rounded text-white">Register</Link>
-          <Link to="/cart" className="relative ml-4">
-            <span role="img" aria-label="cart" className="text-2xl">🛒</span>
-            {cartItemCount > 0 && (
-              <span className="absolute -top-2 -right-2 bg-red-500 text-xs rounded-full px-2">
-                {cartItemCount}
-              </span>
-            )}
-          </Link>
-        </div>
-      </div>
-    </header>
-  );
-};
+      </nav>
+    </div>
+  </header>
+);
 
 export default Header;

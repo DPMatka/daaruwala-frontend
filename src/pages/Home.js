@@ -5,9 +5,10 @@ const BACKEND_URL = "https://daaruwala-backend-5i6g.onrender.com/api/products";
 const categories = [
   { name: "Whiskey" },
   { name: "Rum" },
-  { name: "Beer" },
+  { name: "Mixers" },
   { name: "Vodka" },
   { name: "Cigarette" }
+  { name: "Snakes" }
 ];
 
 const Home = ({ addToCart }) => {

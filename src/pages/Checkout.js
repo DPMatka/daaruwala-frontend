@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 const DELIVERY_CHARGE = 150;
 
-const Checkout = ({ cart, clearCart }) => {
+const Checkout = ({ cart, clearCart, setCart }) => {
     const navigate = useNavigate();
     const [form, setForm] = useState({
         name: '',
@@ -15,6 +15,19 @@ const Checkout = ({ cart, clearCart }) => {
 
     const handleChange = (e) => {
         setForm({ ...form, [e.target.name]: e.target.value });
+    };
+
+    // Quantity controls
+    const handleQuantityChange = (productId, newQty) => {
+        setCart(cart.map(item =>
+            item._id === productId
+                ? { ...item, quantity: Math.max(1, Number(newQty)) }
+                : item
+        ));
+    };
+
+    const handleRemove = (productId) => {
+        setCart(cart.filter(item => item._id !== productId));
     };
 
     const handleSubmit = async (e) => {
@@ -77,13 +90,43 @@ const Checkout = ({ cart, clearCart }) => {
                 <p className="text-gray-600">Your cart is empty.</p>
             ) : (
                 <>
-                    <ul className="mb-4">
-                        {cart.map(item => (
-                            <li key={item._id} className="mb-2">
-                                {item.name} x {item.quantity} = ₹{item.quantity * item.price}
-                            </li>
-                        ))}
-                    </ul>
+                    <table className="mb-4 w-full">
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>Price (₹)</th>
+                                <th>Quantity</th>
+                                <th>Subtotal (₹)</th>
+                                <th>Remove</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {cart.map(item => (
+                                <tr key={item._id}>
+                                    <td>{item.name}</td>
+                                    <td>{item.price}</td>
+                                    <td>
+                                        <input
+                                            type="number"
+                                            min="1"
+                                            value={item.quantity}
+                                            onChange={e => handleQuantityChange(item._id, e.target.value)}
+                                            style={{ width: "60px", padding: "0.3rem", borderRadius: "4px", border: "1px solid #ccc" }}
+                                        />
+                                    </td>
+                                    <td>{item.price * item.quantity}</td>
+                                    <td>
+                                        <button
+                                            onClick={() => handleRemove(item._id)}
+                                            style={{ background: "#e74c3c", color: "#fff", border: "none", borderRadius: "4px", padding: "0.3rem 0.7rem", cursor: "pointer" }}
+                                        >
+                                            Remove
+                                        </button>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
                     <div className="mb-2 font-semibold text-purple-700">
                         Delivery Charge (up to 10km): ₹{DELIVERY_CHARGE}
                     </div>

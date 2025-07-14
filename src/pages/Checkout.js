@@ -136,6 +136,7 @@ const Checkout = ({ cart, clearCart, setCart }) => {
                     <div className="mb-4 font-bold text-right">
                         Grand Total: ₹{grandTotal}
                     </div>
+                    {/* FORM FIELDS ARE HERE */}
                     <form onSubmit={handleSubmit} className="space-y-4">
                         <input
                             type="text"

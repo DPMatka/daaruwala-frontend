@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+const DELIVERY_CHARGE = 150;
+
 const Checkout = ({ cart, clearCart }) => {
     const navigate = useNavigate();
     const [form, setForm] = useState({
@@ -8,6 +10,8 @@ const Checkout = ({ cart, clearCart }) => {
         phone: '',
         address: ''
     });
+
+    const user = JSON.parse(localStorage.getItem("user"));
 
     const handleChange = (e) => {
         setForm({ ...form, [e.target.name]: e.target.value });
@@ -23,16 +27,20 @@ const Checkout = ({ cart, clearCart }) => {
 
         const items = cart.map(item => ({
             productId: item._id,
+            name: item.name,
+            price: item.price,
             quantity: item.quantity,
-            price: item.price
+            imageUrl: item.imageUrl
         }));
 
-        const totalAmount = items.reduce((total, item) => total + item.price * item.quantity, 0);
+        const subtotal = items.reduce((total, item) => total + item.price * item.quantity, 0);
+        const totalAmount = subtotal + DELIVERY_CHARGE;
 
         const orderData = {
-            userId: null, // or provide user ID if logged in
+            userId: user?.user?._id || null,
             items,
             totalAmount,
+            deliveryCharge: DELIVERY_CHARGE,
             deliveryAddress: form.address,
             contactNumber: form.phone
         };
@@ -58,6 +66,9 @@ const Checkout = ({ cart, clearCart }) => {
         }
     };
 
+    const subtotal = cart.reduce((total, item) => total + item.price * item.quantity, 0);
+    const grandTotal = subtotal + DELIVERY_CHARGE;
+
     return (
         <div className="max-w-xl mx-auto mt-10 p-4">
             <h1 className="text-2xl font-bold mb-4">Checkout</h1>
@@ -73,7 +84,15 @@ const Checkout = ({ cart, clearCart }) => {
                             </li>
                         ))}
                     </ul>
-
+                    <div className="mb-2 font-semibold text-purple-700">
+                        Delivery Charge (up to 10km): ₹{DELIVERY_CHARGE}
+                    </div>
+                    <div className="mb-4 text-yellow-700 text-sm">
+                        <b>Note:</b> For more than 10km, delivery charges will be extra depending on distance.
+                    </div>
+                    <div className="mb-4 font-bold text-right">
+                        Grand Total: ₹{grandTotal}
+                    </div>
                     <form onSubmit={handleSubmit} className="space-y-4">
                         <input
                             type="text"

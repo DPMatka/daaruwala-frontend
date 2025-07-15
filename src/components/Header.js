@@ -23,15 +23,7 @@ const Header = ({ cartItemCount }) => {
           DaaruWala
         </Link>
         <nav style={{ display: "flex", gap: "2rem" }}>
-          <Link to="/" style={{ color: "#222", textDecoration: "none" }}>Home</Link>
-          {user ? (
-            <>
-              <Link to="/profile" style={{ color: "#222", textDecoration: "none" }}>Profile</Link>
-              <Link to="/login" style={{ color: "#222", textDecoration: "none" }} onClick={() => { localStorage.removeItem("user"); window.location.href = "/login"; }}>Logout</Link>
-            </>
-          ) : (
-            <Link to="/login" style={{ color: "#222", textDecoration: "none" }}>Login</Link>
-          )}
+          {/* Cart FIRST for easy access */}
           <Link to="/cart" style={{ color: "#222", textDecoration: "none", position: "relative" }}>
             🛒
             {cartItemCount > 0 && (
@@ -42,6 +34,16 @@ const Header = ({ cartItemCount }) => {
               }}>{cartItemCount}</span>
             )}
           </Link>
+          <Link to="/" style={{ color: "#222", textDecoration: "none" }}>Home</Link>
+          {user ? (
+            <>
+              <Link to="/order-history" style={{ color: "#222", textDecoration: "none" }}>Order History</Link>
+              <Link to="/profile" style={{ color: "#222", textDecoration: "none" }}>Profile</Link>
+              <Link to="/login" style={{ color: "#222", textDecoration: "none" }} onClick={() => { localStorage.removeItem("user"); window.location.href = "/login"; }}>Logout</Link>
+            </>
+          ) : (
+            <Link to="/login" style={{ color: "#222", textDecoration: "none" }}>Login</Link>
+          )}
         </nav>
       </div>
     </header>

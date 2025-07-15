@@ -9,7 +9,8 @@ import OrderConfirmation from './pages/OrderConfirmation';
 import MyOrders from './pages/MyOrders';
 import ProductDetail from './pages/ProductDetail';
 import Checkout from './pages/Checkout';
-import Profile from './pages/Profile'; // ✅ NEW
+import Profile from './pages/Profile';
+import OrderHistory from './pages/OrderHistory'; // ✅ NEW
 
 const App = () => {
   const [cart, setCart] = useState([]);
@@ -43,9 +44,10 @@ const App = () => {
         <Route path="/" element={<Home addToCart={addToCart} />} />
         <Route path="/product/:productId" element={<ProductDetail addToCart={addToCart} />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/profile" element={<Profile />} /> {/* ✅ NEW */}
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/order-history" element={<OrderHistory />} /> {/* ✅ NEW */}
         <Route path="/cart" element={<ShoppingCart cart={cart} setCart={setCart} />} />
-        <Route path="/checkout" element={<Checkout cart={cart} clearCart={clearCart} />} />
+        <Route path="/checkout" element={<Checkout cart={cart} clearCart={clearCart} setCart={setCart} />} />
         <Route path="/order-confirmation" element={<OrderConfirmation />} />
         <Route path="/my-orders" element={<MyOrders />} />
       </Routes>

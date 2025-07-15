@@ -69,7 +69,6 @@ const Checkout = ({ cart, clearCart, setCart }) => {
                 throw new Error('Failed to place order');
             }
 
-            const result = await response.json();
             alert('✅ Order Placed Successfully!');
             clearCart(); // Clear cart from frontend
             navigate('/order-confirmation'); // Redirect to thank you page
@@ -106,13 +105,24 @@ const Checkout = ({ cart, clearCart, setCart }) => {
                                     <td>{item.name}</td>
                                     <td>{item.price}</td>
                                     <td>
+                                        <button
+                                            type="button"
+                                            onClick={() => handleQuantityChange(item._id, item.quantity - 1)}
+                                            style={{ marginRight: 5, padding: "0 8px", fontWeight: "bold" }}
+                                            disabled={item.quantity <= 1}
+                                        >-</button>
                                         <input
                                             type="number"
                                             min="1"
                                             value={item.quantity}
                                             onChange={e => handleQuantityChange(item._id, e.target.value)}
-                                            style={{ width: "60px", padding: "0.3rem", borderRadius: "4px", border: "1px solid #ccc" }}
+                                            style={{ width: "40px", textAlign: "center" }}
                                         />
+                                        <button
+                                            type="button"
+                                            onClick={() => handleQuantityChange(item._id, item.quantity + 1)}
+                                            style={{ marginLeft: 5, padding: "0 8px", fontWeight: "bold" }}
+                                        >+</button>
                                     </td>
                                     <td>{item.price * item.quantity}</td>
                                     <td>
@@ -136,7 +146,6 @@ const Checkout = ({ cart, clearCart, setCart }) => {
                     <div className="mb-4 font-bold text-right">
                         Grand Total: ₹{grandTotal}
                     </div>
-                    {/* FORM FIELDS ARE HERE */}
                     <form onSubmit={handleSubmit} className="space-y-4">
                         <input
                             type="text"

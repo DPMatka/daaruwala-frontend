@@ -11,9 +11,7 @@ const Checkout = ({ cart, clearCart, setCart }) => {
         address: ''
     });
 
-    // Get the logged-in user (if any)
     const user = JSON.parse(localStorage.getItem("user"));
-    const userId = user?.user?._id || user?._id || null;
 
     const handleChange = (e) => {
         setForm({ ...form, [e.target.name]: e.target.value });
@@ -52,7 +50,7 @@ const Checkout = ({ cart, clearCart, setCart }) => {
         const totalAmount = subtotal + DELIVERY_CHARGE;
 
         const orderData = {
-            userId, // will be null for guests
+            userId: user?.user?._id || null,
             items,
             totalAmount,
             deliveryCharge: DELIVERY_CHARGE,

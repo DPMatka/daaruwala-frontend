@@ -11,6 +11,7 @@ const Checkout = ({ cart, clearCart, setCart }) => {
         address: ''
     });
 
+    // Get the logged-in user (if any)
     const user = JSON.parse(localStorage.getItem("user"));
 
     const handleChange = (e) => {
@@ -38,6 +39,12 @@ const Checkout = ({ cart, clearCart, setCart }) => {
             return;
         }
 
+        // Block guest checkout: user must be logged in
+        if (!user?.user?._id) {
+            alert("Please login to place an order.");
+            return;
+        }
+
         const items = cart.map(item => ({
             productId: item._id,
             name: item.name,
@@ -50,7 +57,7 @@ const Checkout = ({ cart, clearCart, setCart }) => {
         const totalAmount = subtotal + DELIVERY_CHARGE;
 
         const orderData = {
-            userId: user?.user?._id || null,
+            userId: user.user._id, // <-- Always send the logged-in user's _id
             items,
             totalAmount,
             deliveryCharge: DELIVERY_CHARGE,

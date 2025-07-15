@@ -13,7 +13,7 @@ const Checkout = ({ cart, clearCart, setCart }) => {
 
     // Get the logged-in user (if any)
     const user = JSON.parse(localStorage.getItem("user"));
-    const userId = user?.user?._id || user?._id;
+    const userId = user?.user?._id || user?._id || null;
 
     const handleChange = (e) => {
         setForm({ ...form, [e.target.name]: e.target.value });
@@ -40,12 +40,6 @@ const Checkout = ({ cart, clearCart, setCart }) => {
             return;
         }
 
-        // Block guest checkout: user must be logged in
-        if (!userId) {
-            alert("Please login to place an order.");
-            return;
-        }
-
         const items = cart.map(item => ({
             productId: item._id,
             name: item.name,
@@ -58,7 +52,7 @@ const Checkout = ({ cart, clearCart, setCart }) => {
         const totalAmount = subtotal + DELIVERY_CHARGE;
 
         const orderData = {
-            userId,
+            userId, // will be null for guests
             items,
             totalAmount,
             deliveryCharge: DELIVERY_CHARGE,

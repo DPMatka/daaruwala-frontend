@@ -89,22 +89,22 @@ const Checkout = ({ cart, clearCart, setCart }) => {
                 <p className="text-gray-600">Your cart is empty.</p>
             ) : (
                 <>
-                    <table className="mb-4 w-full">
+                    <table className="mb-4 w-full" style={{ borderCollapse: "collapse" }}>
                         <thead>
                             <tr>
-                                <th>Product</th>
-                                <th>Price (₹)</th>
-                                <th>Quantity</th>
-                                <th>Subtotal (₹)</th>
-                                <th>Remove</th>
+                                <th style={{ textAlign: "left", padding: 8 }}>Product</th>
+                                <th style={{ textAlign: "left", padding: 8 }}>Price (₹)</th>
+                                <th style={{ textAlign: "left", padding: 8 }}>Quantity</th>
+                                <th style={{ textAlign: "left", padding: 8 }}>Subtotal (₹)</th>
+                                <th style={{ textAlign: "left", padding: 8 }}>Remove</th>
                             </tr>
                         </thead>
                         <tbody>
                             {cart.map(item => (
                                 <tr key={item._id}>
-                                    <td>{item.name}</td>
-                                    <td>{item.price}</td>
-                                    <td>
+                                    <td style={{ padding: 8 }}>{item.name}</td>
+                                    <td style={{ padding: 8 }}>{item.price}</td>
+                                    <td style={{ padding: 8 }}>
                                         <button
                                             type="button"
                                             onClick={() => handleQuantityChange(item._id, item.quantity - 1)}
@@ -124,8 +124,8 @@ const Checkout = ({ cart, clearCart, setCart }) => {
                                             style={{ marginLeft: 5, padding: "0 8px", fontWeight: "bold" }}
                                         >+</button>
                                     </td>
-                                    <td>{item.price * item.quantity}</td>
-                                    <td>
+                                    <td style={{ padding: 8 }}>{item.price * item.quantity}</td>
+                                    <td style={{ padding: 8 }}>
                                         <button
                                             onClick={() => handleRemove(item._id)}
                                             style={{ background: "#e74c3c", color: "#fff", border: "none", borderRadius: "4px", padding: "0.3rem 0.7rem", cursor: "pointer" }}
@@ -146,37 +146,63 @@ const Checkout = ({ cart, clearCart, setCart }) => {
                     <div className="mb-4 font-bold text-right">
                         Grand Total: ₹{grandTotal}
                     </div>
-                    <form onSubmit={handleSubmit} className="space-y-4">
-                        <input
-                            type="text"
-                            name="name"
-                            placeholder="Your Full Name"
-                            value={form.name}
-                            onChange={handleChange}
-                            className="w-full border p-2 rounded"
-                        />
-                        <input
-                            type="tel"
-                            name="phone"
-                            placeholder="Phone Number"
-                            value={form.phone}
-                            onChange={handleChange}
-                            className="w-full border p-2 rounded"
-                        />
-                        <textarea
-                            name="address"
-                            placeholder="Delivery Address"
-                            value={form.address}
-                            onChange={handleChange}
-                            className="w-full border p-2 rounded"
-                        />
-                        <button
-                            type="submit"
-                            className="bg-purple-600 text-white w-full py-2 rounded hover:bg-purple-700"
-                        >
-                            Place Order
-                        </button>
-                    </form>
+                    {/* Professional customer details section */}
+                    <div style={{
+                        background: "#f9fafb",
+                        borderRadius: 8,
+                        padding: 20,
+                        marginBottom: 24,
+                        border: "1px solid #eee"
+                    }}>
+                        <div style={{ color: "#b91c1c", fontWeight: "bold", marginBottom: 12 }}>
+                            Please fill the details correctly. Incorrect details can lead to your order being cancelled.
+                        </div>
+                        <form onSubmit={handleSubmit} className="space-y-4">
+                            <div style={{ display: "flex", gap: 12, marginBottom: 12 }}>
+                                <div style={{ flex: 1 }}>
+                                    <label style={{ fontWeight: "bold" }}>Full Name</label>
+                                    <input
+                                        type="text"
+                                        name="name"
+                                        placeholder="Your Full Name"
+                                        value={form.name}
+                                        onChange={handleChange}
+                                        className="w-full border p-2 rounded"
+                                        required
+                                    />
+                                </div>
+                                <div style={{ flex: 1 }}>
+                                    <label style={{ fontWeight: "bold" }}>Phone Number</label>
+                                    <input
+                                        type="tel"
+                                        name="phone"
+                                        placeholder="Phone Number"
+                                        value={form.phone}
+                                        onChange={handleChange}
+                                        className="w-full border p-2 rounded"
+                                        required
+                                    />
+                                </div>
+                            </div>
+                            <div style={{ marginBottom: 12 }}>
+                                <label style={{ fontWeight: "bold" }}>Delivery Address</label>
+                                <textarea
+                                    name="address"
+                                    placeholder="House No, Street, Area, City, Pincode"
+                                    value={form.address}
+                                    onChange={handleChange}
+                                    className="w-full border p-2 rounded"
+                                    required
+                                />
+                            </div>
+                            <button
+                                type="submit"
+                                className="bg-purple-600 text-white w-full py-2 rounded hover:bg-purple-700"
+                            >
+                                Place Order
+                            </button>
+                        </form>
+                    </div>
                 </>
             )}
         </div>

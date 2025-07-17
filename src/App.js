@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 
 import Header from './components/Header';
 import Home from './pages/Home';
@@ -10,12 +10,13 @@ import MyOrders from './pages/MyOrders';
 import ProductDetail from './pages/ProductDetail';
 import Checkout from './pages/Checkout';
 import Profile from './pages/Profile';
-import OrderHistory from './pages/OrderHistory'; // ✅ NEW
+import OrderHistory from './pages/OrderHistory';
 
 const App = () => {
   const [cart, setCart] = useState([]);
+  const user = JSON.parse(localStorage.getItem("user"));
 
-  // ✅ Add to cart with quantity
+  // Add to cart with quantity
   const addToCart = (product) => {
     const existingProduct = cart.find((item) => item._id === product._id);
 
@@ -34,22 +35,32 @@ const App = () => {
     alert(`✅ ${product.name} added to cart!`);
   };
 
-  // ✅ Clear cart after order placed
+  // Clear cart after order placed
   const clearCart = () => setCart([]);
 
   return (
     <Router>
       <Header cartItemCount={cart.length} />
       <Routes>
-        <Route path="/" element={<Home addToCart={addToCart} />} />
-        <Route path="/product/:productId" element={<ProductDetail addToCart={addToCart} />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/order-history" element={<OrderHistory />} /> {/* ✅ NEW */}
-        <Route path="/cart" element={<ShoppingCart cart={cart} setCart={setCart} />} />
-        <Route path="/checkout" element={<Checkout cart={cart} clearCart={clearCart} setCart={setCart} />} />
-        <Route path="/order-confirmation" element={<OrderConfirmation />} />
-        <Route path="/my-orders" element={<MyOrders />} />
+        {/* If not logged in, always show Login page */}
+        {!user ? (
+          <>
+            <Route path="*" element={<Login />} />
+          </>
+        ) : (
+          <>
+            <Route path="/" element={<Home addToCart={addToCart} />} />
+            <Route path="/product/:productId" element={<ProductDetail addToCart={addToCart} />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/order-history" element={<OrderHistory />} />
+            <Route path="/cart" element={<ShoppingCart cart={cart} setCart={setCart} />} />
+            <Route path="/checkout" element={<Checkout cart={cart} clearCart={clearCart} setCart={setCart} />} />
+            <Route path="/order-confirmation" element={<OrderConfirmation />} />
+            <Route path="/my-orders" element={<MyOrders />} />
+            <Route path="*" element={<Navigate to="/" />} />
+          </>
+        )}
       </Routes>
     </Router>
   );

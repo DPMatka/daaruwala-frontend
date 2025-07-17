@@ -6,43 +6,142 @@ const Header = ({ cartItemCount }) => {
   const user = localStorage.getItem("user");
 
   return (
-    <header style={{
-      background: "#fff",
-      borderBottom: "1px solid #eee",
-      padding: "0.5rem 0",
-      marginBottom: "2rem"
-    }}>
-      <div style={{
-        maxWidth: "1200px",
-        margin: "0 auto",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between"
-      }}>
-        <Link to="/" style={{ fontWeight: "bold", fontSize: "1.7rem", color: "#7c1c4b", textDecoration: "none" }}>
+    <header
+      className="sticky-header"
+      style={{
+        position: "sticky",
+        top: 0,
+        zIndex: 100,
+        background: "#18181b",
+        borderBottom: "1px solid #232946",
+        padding: "0.5rem 0",
+        marginBottom: "2rem",
+        width: "100%",
+      }}
+    >
+      <div
+        style={{
+          maxWidth: "1200px",
+          margin: "0 auto",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          padding: "0 1rem",
+        }}
+      >
+        <Link
+          to="/"
+          style={{
+            fontWeight: "bold",
+            fontSize: "1.7rem",
+            color: "#eebbc3",
+            textDecoration: "none",
+            letterSpacing: "1px",
+          }}
+        >
           DaaruWala
         </Link>
-        <nav style={{ display: "flex", gap: "2rem" }}>
+        <nav
+          style={{
+            display: "flex",
+            gap: "1.2rem",
+            alignItems: "center",
+          }}
+        >
           {/* Cart FIRST for easy access */}
-          <Link to="/cart" style={{ color: "#222", textDecoration: "none", position: "relative" }}>
+          <Link
+            to="/cart"
+            style={{
+              color: "#eebbc3",
+              textDecoration: "none",
+              position: "relative",
+              fontSize: "1.5rem",
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
             🛒
             {cartItemCount > 0 && (
-              <span style={{
-                position: "absolute", top: "-8px", right: "-12px",
-                background: "#a21caf", color: "#fff", borderRadius: "50%",
-                fontSize: "0.8rem", padding: "2px 6px"
-              }}>{cartItemCount}</span>
+              <span
+                style={{
+                  position: "absolute",
+                  top: "-8px",
+                  right: "-12px",
+                  background: "#a21caf",
+                  color: "#fff",
+                  borderRadius: "50%",
+                  fontSize: "0.8rem",
+                  padding: "2px 6px",
+                  fontWeight: "bold",
+                }}
+              >
+                {cartItemCount}
+              </span>
             )}
           </Link>
-          <Link to="/" style={{ color: "#222", textDecoration: "none" }}>Home</Link>
+          <Link
+            to="/"
+            style={{
+              color: "#eebbc3",
+              textDecoration: "none",
+              fontWeight: "500",
+              fontSize: "1.1rem",
+            }}
+          >
+            Home
+          </Link>
           {user ? (
             <>
-              <Link to="/order-history" style={{ color: "#222", textDecoration: "none" }}>Order History</Link>
-              <Link to="/profile" style={{ color: "#222", textDecoration: "none" }}>Profile</Link>
-              <Link to="/login" style={{ color: "#222", textDecoration: "none" }} onClick={() => { localStorage.removeItem("user"); window.location.href = "/login"; }}>Logout</Link>
+              <Link
+                to="/order-history"
+                style={{
+                  color: "#eebbc3",
+                  textDecoration: "none",
+                  fontWeight: "500",
+                  fontSize: "1.1rem",
+                }}
+              >
+                Order History
+              </Link>
+              <Link
+                to="/profile"
+                style={{
+                  color: "#eebbc3",
+                  textDecoration: "none",
+                  fontWeight: "500",
+                  fontSize: "1.1rem",
+                }}
+              >
+                Profile
+              </Link>
+              <Link
+                to="/login"
+                style={{
+                  color: "#eebbc3",
+                  textDecoration: "none",
+                  fontWeight: "500",
+                  fontSize: "1.1rem",
+                }}
+                onClick={() => {
+                  localStorage.removeItem("user");
+                  window.location.href = "/login";
+                }}
+              >
+                Logout
+              </Link>
             </>
           ) : (
-            <Link to="/login" style={{ color: "#222", textDecoration: "none" }}>Login</Link>
+            <Link
+              to="/login"
+              style={{
+                color: "#eebbc3",
+                textDecoration: "none",
+                fontWeight: "500",
+                fontSize: "1.1rem",
+              }}
+            >
+              Login
+            </Link>
           )}
         </nav>
       </div>

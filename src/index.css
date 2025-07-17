@@ -1,0 +1,12 @@
+body {
+  background: #18181b;
+  color: #fff;
+  font-family: 'Poppins', Arial, sans-serif;
+}
+.sticky-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: #18181b;
+  border-bottom: 1px solid #232946;
+}

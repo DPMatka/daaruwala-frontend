@@ -4,16 +4,16 @@ const BACKEND_URL = "https://daaruwala-backend-5i6g.onrender.com/api/products";
 
 const categories = [
   { name: "Whiskey" },
+  { name: "Rum" },
   { name: "Beer" },
   { name: "Vodka" },
-  { name: "Rum" },
   { name: "Snacks" },
   { name: "Mixers" },
   { name: "Cigarette" }
 ];
 
-const darkBg = "#232946";
-const cardBg = "#393e6b";
+const darkBg = "#18181b";
+const cardBg = "#232946";
 const accent = "#eebbc3";
 const text = "#fff";
 const faded = "#b8c1ec";
@@ -39,7 +39,7 @@ const Home = ({ addToCart }) => {
     : products;
 
   return (
-    <main style={{ background: darkBg, minHeight: "100vh", color: text, padding: "2rem" }}>
+    <main style={{ background: darkBg, minHeight: "100vh", color: text, padding: "2rem 0" }}>
       <section>
         <h2 style={{
           textAlign: "center",
@@ -52,37 +52,50 @@ const Home = ({ addToCart }) => {
           Order Alcohol & Snacks 24/7 in Indore
         </h2>
 
-        {/* Category Grid */}
-        <div style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))",
-          gap: "1.5rem",
-          marginBottom: "2.5rem",
-          maxWidth: "900px",
-          marginLeft: "auto",
-          marginRight: "auto"
-        }}>
-          {categories.map(cat => (
-            <div
-              key={cat.name}
-              onClick={() => setSelectedCategory(cat.name)}
-              style={{
-                background: selectedCategory === cat.name ? accent : cardBg,
-                color: selectedCategory === cat.name ? darkBg : accent,
-                borderRadius: "10px",
-                boxShadow: "0 2px 8px #0002",
-                padding: "1.5rem 0",
-                textAlign: "center",
-                fontWeight: "bold",
-                fontSize: "1.1rem",
-                cursor: "pointer",
-                border: selectedCategory === cat.name ? `2px solid ${accent}` : `2px solid ${cardBg}`,
-                transition: "all 0.2s"
-              }}
-            >
-              {cat.name}
-            </div>
-          ))}
+        {/* Sticky Category Bar */}
+        <div
+          className="sticky-categories"
+          style={{
+            position: "sticky",
+            top: 64,
+            zIndex: 99,
+            background: cardBg,
+            padding: "12px 0",
+            marginBottom: "2.5rem",
+            boxShadow: "0 2px 8px #0001"
+          }}
+        >
+          <div
+            className="category-grid"
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(120px, 1fr))",
+              gap: "1rem",
+              maxWidth: "900px",
+              margin: "0 auto"
+            }}
+          >
+            {categories.map(cat => (
+              <button
+                key={cat.name}
+                className={`category-btn${selectedCategory === cat.name ? ' selected' : ''}`}
+                onClick={() => setSelectedCategory(cat.name)}
+                style={{
+                  background: selectedCategory === cat.name ? accent : cardBg,
+                  color: selectedCategory === cat.name ? darkBg : accent,
+                  border: "none",
+                  borderRadius: "10px",
+                  padding: "1rem 0",
+                  fontWeight: "bold",
+                  fontSize: "1.1rem",
+                  cursor: "pointer",
+                  transition: "all 0.2s"
+                }}
+              >
+                {cat.name}
+              </button>
+            ))}
+          </div>
         </div>
 
         {/* Show all products if no category selected */}

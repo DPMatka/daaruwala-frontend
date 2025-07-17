@@ -12,11 +12,10 @@ const categories = [
   { name: "Cigarette" }
 ];
 
-const darkBg = "#18181b";
-const cardBg = "#232946";
-const accent = "#eebbc3";
-const text = "#fff";
-const faded = "#b8c1ec";
+const cardBg = "#fff";
+const accent = "#7c1c4b";
+const faded = "#888";
+const text = "#222";
 
 const Home = ({ addToCart }) => {
   const [products, setProducts] = useState([]);
@@ -39,7 +38,7 @@ const Home = ({ addToCart }) => {
     : products;
 
   return (
-    <main style={{ background: darkBg, minHeight: "100vh", color: text, padding: "2rem 0" }}>
+    <main style={{ background: "#f7f7fa", minHeight: "100vh", color: text, padding: "2rem 0" }}>
       <section>
         <h2 style={{
           textAlign: "center",
@@ -59,7 +58,7 @@ const Home = ({ addToCart }) => {
             position: "sticky",
             top: 64,
             zIndex: 99,
-            background: cardBg,
+            background: "#fff",
             padding: "12px 0",
             marginBottom: "2.5rem",
             boxShadow: "0 2px 8px #0001"
@@ -81,9 +80,9 @@ const Home = ({ addToCart }) => {
                 className={`category-btn${selectedCategory === cat.name ? ' selected' : ''}`}
                 onClick={() => setSelectedCategory(cat.name)}
                 style={{
-                  background: selectedCategory === cat.name ? accent : cardBg,
-                  color: selectedCategory === cat.name ? darkBg : accent,
-                  border: "none",
+                  background: selectedCategory === cat.name ? accent : "#fff",
+                  color: selectedCategory === cat.name ? "#fff" : accent,
+                  border: selectedCategory === cat.name ? `2px solid ${accent}` : `2px solid #eee`,
                   borderRadius: "10px",
                   padding: "1rem 0",
                   fontWeight: "bold",
@@ -105,7 +104,7 @@ const Home = ({ addToCart }) => {
               onClick={() => setSelectedCategory("")}
               style={{
                 background: faded,
-                color: darkBg,
+                color: "#fff",
                 border: "none",
                 borderRadius: "6px",
                 padding: "0.4rem 1.2rem",
@@ -147,11 +146,11 @@ const Home = ({ addToCart }) => {
                   <img src={product.imageUrl || "https://via.placeholder.com/120x180?text=No+Image"} alt={product.name} style={{ width: "120px", height: "180px", objectFit: "cover", borderRadius: "8px" }} />
                   <h2 style={{ margin: "1rem 0 0.5rem", fontSize: "1.1rem", color: accent }}>{product.name}</h2>
                   <div style={{ color: faded, marginBottom: "0.5rem" }}>{product.category}</div>
-                  <div style={{ fontWeight: "bold", fontSize: "1.1rem", marginBottom: "0.5rem", color: "#fff" }}>₹{product.price}</div>
+                  <div style={{ fontWeight: "bold", fontSize: "1.1rem", marginBottom: "0.5rem", color: text }}>₹{product.price}</div>
                   <button
                     style={{
                       background: accent,
-                      color: darkBg,
+                      color: "#fff",
                       border: "none",
                       borderRadius: "6px",
                       padding: "0.5rem 1.2rem",

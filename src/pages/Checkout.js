@@ -15,6 +15,10 @@ const Checkout = ({ cart, clearCart, setCart }) => {
     const user = JSON.parse(localStorage.getItem("user"));
     const userId = user?.user?._id || user?._id || null;
 
+    // If logged in, use user info for name/phone
+    const displayName = user?.user?.name || user?.name || form.name;
+    const displayPhone = user?.user?.phone || user?.phone || form.phone;
+
     const handleChange = (e) => {
         setForm({ ...form, [e.target.name]: e.target.value });
     };
@@ -35,7 +39,7 @@ const Checkout = ({ cart, clearCart, setCart }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (!form.name || !form.phone || !form.address) {
+        if (!displayName || !displayPhone || !form.address) {
             alert('Please fill all the fields.');
             return;
         }
@@ -57,7 +61,8 @@ const Checkout = ({ cart, clearCart, setCart }) => {
             totalAmount,
             deliveryCharge: DELIVERY_CHARGE,
             deliveryAddress: form.address,
-            contactNumber: form.phone
+            contactNumber: displayPhone,
+            customerName: displayName // (optional, for admin panel)
         };
 
         try {
@@ -167,10 +172,11 @@ const Checkout = ({ cart, clearCart, setCart }) => {
                                         type="text"
                                         name="name"
                                         placeholder="Your Full Name"
-                                        value={form.name}
+                                        value={displayName}
                                         onChange={handleChange}
                                         className="w-full border p-2 rounded"
                                         required
+                                        disabled={!!userId} // disable if logged in
                                     />
                                 </div>
                                 <div style={{ flex: 1 }}>
@@ -179,10 +185,11 @@ const Checkout = ({ cart, clearCart, setCart }) => {
                                         type="tel"
                                         name="phone"
                                         placeholder="Phone Number"
-                                        value={form.phone}
+                                        value={displayPhone}
                                         onChange={handleChange}
                                         className="w-full border p-2 rounded"
                                         required
+                                        disabled={!!userId} // disable if logged in
                                     />
                                 </div>
                             </div>

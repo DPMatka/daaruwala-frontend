@@ -13,7 +13,7 @@ const Login = ({ onLogin }) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setMessage("");
     try {
@@ -24,13 +24,20 @@ const Login = ({ onLogin }) => {
         body: JSON.stringify(form)
       });
       const data = await res.json();
+
+      // ✅ DEBUG: See exactly what the backend sent back
+      console.log("LOGIN RESPONSE FROM BACKEND:", data);
+
       if (!res.ok) throw new Error(data.message || "Something went wrong");
+
       if (isLogin) {
+        // Save the entire response to localStorage
         localStorage.setItem("user", JSON.stringify(data));
         setMessage("Login successful!");
-        if (onLogin) onLogin(); // <-- This will trigger App.js to re-render and show the homepage
+        if (onLogin) onLogin();
+        
         setTimeout(() => {
-          navigate("/"); // Redirect to home after login
+          navigate("/");
         }, 500);
       } else {
         setMessage("Registration successful! Please login.");

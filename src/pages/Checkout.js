@@ -13,11 +13,11 @@ const Checkout = ({ cart, clearCart, setCart }) => {
 
     // Get the logged-in user (if any)
     const user = JSON.parse(localStorage.getItem("user"));
-    const userId = user?.user?._id || user?._id || null;
+    const userId = user?.user?._id || null;
 
     // If logged in, use user info for name/phone
-    const displayName = user?.user?.name || user?.name || form.name;
-    const displayPhone = user?.user?.phone || user?.phone || form.phone;
+    const displayName = user?.user?.name || form.name;
+    const displayPhone = user?.user?.phone || form.phone;
 
     const handleChange = (e) => {
         setForm({ ...form, [e.target.name]: e.target.value });

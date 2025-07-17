@@ -3,15 +3,16 @@ import React, { useEffect, useState } from 'react';
 const OrderHistory = () => {
   const [orders, setOrders] = useState([]);
   const user = JSON.parse(localStorage.getItem("user"));
+  const userId = user?.user?._id || user?._id || null;
 
   useEffect(() => {
-    if (!user?.user?._id) return;
-    fetch(`https://daaruwala-backend-5i6g.onrender.com/api/orders/user/${user.user._id}`)
+    if (!userId) return;
+    fetch(`https://daaruwala-backend-5i6g.onrender.com/api/orders/user/${userId}`)
       .then(res => res.json())
       .then(setOrders);
-  }, [user]);
+  }, [userId]);
 
-  if (!user) return <div className="text-center mt-10">Please login to view your orders.</div>;
+  if (!userId) return <div className="text-center mt-10">Please login to view your orders.</div>;
 
   return (
     <div className="max-w-xl mx-auto mt-10 p-4">

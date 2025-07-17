@@ -1,23 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const DELIVERY_CHARGE = 150;
 
 const Checkout = ({ cart, clearCart, setCart }) => {
     const navigate = useNavigate();
+    
+    // Get the logged-in user object from localStorage
+    const userObject = JSON.parse(localStorage.getItem("user"));
+    const userId = userObject?.user?._id || userObject?._id || null;
+
+    // Pre-fill the form with the user's details if they are logged in
     const [form, setForm] = useState({
-        name: '',
-        phone: '',
+        name: userObject?.user?.name || userObject?.name || '',
+        phone: userObject?.user?.phone || userObject?.phone || '',
         address: ''
     });
-
-    // Get the logged-in user (if any)
-    const user = JSON.parse(localStorage.getItem("user"));
-    const userId = user?.user?._id || null;
-
-    // If logged in, use user info for name/phone
-    const displayName = user?.user?.name || form.name;
-    const displayPhone = user?.user?.phone || form.phone;
 
     const handleChange = (e) => {
         setForm({ ...form, [e.target.name]: e.target.value });
@@ -39,7 +37,7 @@ const Checkout = ({ cart, clearCart, setCart }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (!displayName || !displayPhone || !form.address) {
+        if (!form.name || !form.phone || !form.address) {
             alert('Please fill all the fields.');
             return;
         }
@@ -56,14 +54,17 @@ const Checkout = ({ cart, clearCart, setCart }) => {
         const totalAmount = subtotal + DELIVERY_CHARGE;
 
         const orderData = {
-            userId, // will be null for guests, or the user's _id if logged in
+            userId, // This will now correctly send the user's ID
             items,
             totalAmount,
             deliveryCharge: DELIVERY_CHARGE,
             deliveryAddress: form.address,
-            contactNumber: displayPhone,
-            customerName: displayName // (optional, for admin panel)
+            contactNumber: form.phone,
+            customerName: form.name // Send the name for all orders
         };
+        
+        // DEBUG: Check what is being sent
+        console.log("SENDING ORDER DATA:", orderData);
 
         try {
             const response = await fetch('https://daaruwala-backend-5i6g.onrender.com/api/orders', {
@@ -96,6 +97,7 @@ const Checkout = ({ cart, clearCart, setCart }) => {
                 <p className="text-gray-600">Your cart is empty.</p>
             ) : (
                 <>
+                    {/* ... your cart table ... */}
                     <table className="mb-4 w-full" style={{ borderCollapse: "collapse" }}>
                         <thead>
                             <tr>
@@ -153,6 +155,7 @@ const Checkout = ({ cart, clearCart, setCart }) => {
                     <div className="mb-4 font-bold text-right">
                         Grand Total: ₹{grandTotal}
                     </div>
+
                     {/* Professional customer details section */}
                     <div style={{
                         background: "#f9fafb",
@@ -172,11 +175,11 @@ const Checkout = ({ cart, clearCart, setCart }) => {
                                         type="text"
                                         name="name"
                                         placeholder="Your Full Name"
-                                        value={displayName}
+                                        value={form.name}
                                         onChange={handleChange}
                                         className="w-full border p-2 rounded"
                                         required
-                                        disabled={!!userId} // disable if logged in
+                                        disabled={!!userId} // Disable if logged in and name is pre-filled
                                     />
                                 </div>
                                 <div style={{ flex: 1 }}>
@@ -185,11 +188,11 @@ const Checkout = ({ cart, clearCart, setCart }) => {
                                         type="tel"
                                         name="phone"
                                         placeholder="Phone Number"
-                                        value={displayPhone}
+                                        value={form.phone}
                                         onChange={handleChange}
                                         className="w-full border p-2 rounded"
                                         required
-                                        disabled={!!userId} // disable if logged in
+                                        disabled={!!userId} // Disable if logged in and phone is pre-filled
                                     />
                                 </div>
                             </div>

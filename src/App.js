@@ -14,6 +14,8 @@ import OrderHistory from './pages/OrderHistory';
 
 const App = () => {
   const [cart, setCart] = useState([]);
+  // Use state to force re-render after login
+  const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem("user"));
   const user = JSON.parse(localStorage.getItem("user"));
 
   // Add to cart with quantity
@@ -43,15 +45,15 @@ const App = () => {
       <Header cartItemCount={cart.length} />
       <Routes>
         {/* If not logged in, always show Login page */}
-        {!user ? (
+        {!isLoggedIn ? (
           <>
-            <Route path="*" element={<Login />} />
+            <Route path="*" element={<Login onLogin={() => setIsLoggedIn(true)} />} />
           </>
         ) : (
           <>
             <Route path="/" element={<Home addToCart={addToCart} />} />
             <Route path="/product/:productId" element={<ProductDetail addToCart={addToCart} />} />
-            <Route path="/login" element={<Login />} />
+            <Route path="/login" element={<Login onLogin={() => setIsLoggedIn(true)} />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/order-history" element={<OrderHistory />} />
             <Route path="/cart" element={<ShoppingCart cart={cart} setCart={setCart} />} />

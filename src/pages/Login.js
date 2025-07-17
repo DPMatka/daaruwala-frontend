@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 const API_URL = "https://daaruwala-backend-5i6g.onrender.com/api/auth";
 
-const Login = () => {
+const Login = ({ onLogin }) => {
   const [isLogin, setIsLogin] = useState(true);
   const [form, setForm] = useState({ email: "", password: "", name: "", phone: "" });
   const [message, setMessage] = useState("");
@@ -28,9 +28,10 @@ const Login = () => {
       if (isLogin) {
         localStorage.setItem("user", JSON.stringify(data));
         setMessage("Login successful!");
+        if (onLogin) onLogin(); // <-- This will trigger App.js to re-render and show the homepage
         setTimeout(() => {
           navigate("/"); // Redirect to home after login
-        }, 1000);
+        }, 500);
       } else {
         setMessage("Registration successful! Please login.");
         setIsLogin(true);

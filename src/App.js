@@ -15,7 +15,8 @@ import OrderHistory from './pages/OrderHistory';
 const App = () => {
   const [cart, setCart] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem("user"));
-  
+  const [searchTerm, setSearchTerm] = useState(""); // <-- Search state is managed here
+
   const addToCart = (product) => {
     const existingProduct = cart.find((item) => item._id === product._id);
     if (existingProduct) {
@@ -36,7 +37,12 @@ const App = () => {
 
   return (
     <Router>
-      <Header cartItemCount={cart.length} />
+      {/* We pass the search state and function to the Header */}
+      <Header 
+        cartItemCount={cart.length} 
+        searchTerm={searchTerm} 
+        setSearchTerm={setSearchTerm} 
+      />
 
       <div className="social-icons">
         <a 
@@ -70,7 +76,8 @@ const App = () => {
           </>
         ) : (
           <>
-            <Route path="/" element={<Home addToCart={addToCart} />} />
+            {/* We pass the search term down to the Home page */}
+            <Route path="/" element={<Home addToCart={addToCart} searchTerm={searchTerm} />} />
             <Route path="/product/:productId" element={<ProductDetail addToCart={addToCart} />} />
             <Route path="/login" element={<Login onLogin={() => setIsLoggedIn(true)} />} />
             <Route path="/profile" element={<Profile />} />

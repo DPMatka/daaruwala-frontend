@@ -1,20 +1,19 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const Header = ({ cartItemCount }) => {
+// Header now receives searchTerm and setSearchTerm from App.js
+const Header = ({ cartItemCount, searchTerm, setSearchTerm }) => {
   const user = localStorage.getItem("user");
 
   return (
-    // The className "sticky-header" will handle the white background and sticky position
     <header 
       className="sticky-header" 
       style={{
-        // These inline styles are kept as you had them
         position: "sticky",
         top: 0,
         zIndex: 100,
-        background: "#fff", // CHANGED from #18181b to white
-        borderBottom: "1px solid #eee", // CHANGED from #232946 to light grey
+        background: "#fff",
+        borderBottom: "1px solid #eee",
         padding: "0.5rem 0",
         marginBottom: "2rem",
         width: "100%",
@@ -27,6 +26,8 @@ const Header = ({ cartItemCount }) => {
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
+          flexWrap: 'wrap', // Allows items to wrap on mobile
+          gap: '1rem', // Adds space between wrapped items
           padding: "0 1rem",
         }}
       >
@@ -35,7 +36,7 @@ const Header = ({ cartItemCount }) => {
           style={{
             fontWeight: "bold",
             fontSize: "1.7rem",
-            color: "#7c1c4b", // CHANGED from #eebbc3 to dark red/purple
+            color: "#7c1c4b",
             textDecoration: "none",
             letterSpacing: "1px",
           }}
@@ -43,19 +44,38 @@ const Header = ({ cartItemCount }) => {
           DaaruWala
         </Link>
 
-        {/* The className "header-nav" makes the links wrap on mobile */}
+        {/* --- Search Bar is now part of the Header --- */}
+        {/* 'order: 3' makes it appear on the second line on mobile */}
+        <div style={{ flexGrow: 1, minWidth: '250px', maxWidth: '400px', order: 3, width: '100%', margin: '0 auto' }}>
+          <input
+            type="text"
+            placeholder="Search for products..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            style={{ 
+              width: "100%", 
+              padding: "10px", 
+              borderRadius: "20px", /* Pill shape */
+              border: "1px solid #ddd",
+              fontSize: '1rem'
+            }}
+          />
+        </div>
+        
+        {/* 'order: 2' keeps the navigation on the right on desktop */}
         <nav 
           className="header-nav"
           style={{
             display: "flex",
             gap: "1.2rem",
             alignItems: "center",
+            order: 2
           }}
         >
           <Link
             to="/cart"
             style={{
-              color: "#222", // CHANGED from #eebbc3 to dark text
+              color: "#222",
               textDecoration: "none",
               position: "relative",
               fontSize: "1.5rem",
@@ -85,7 +105,7 @@ const Header = ({ cartItemCount }) => {
           <Link
             to="/"
             style={{
-              color: "#222", // CHANGED from #eebbc3 to dark text
+              color: "#222",
               textDecoration: "none",
               fontWeight: "500",
               fontSize: "1.1rem",
@@ -98,7 +118,7 @@ const Header = ({ cartItemCount }) => {
               <Link
                 to="/order-history"
                 style={{
-                  color: "#222", // CHANGED from #eebbc3 to dark text
+                  color: "#222",
                   textDecoration: "none",
                   fontWeight: "500",
                   fontSize: "1.1rem",
@@ -109,7 +129,7 @@ const Header = ({ cartItemCount }) => {
               <Link
                 to="/profile"
                 style={{
-                  color: "#222", // CHANGED from #eebbc3 to dark text
+                  color: "#222",
                   textDecoration: "none",
                   fontWeight: "500",
                   fontSize: "1.1rem",
@@ -120,7 +140,7 @@ const Header = ({ cartItemCount }) => {
               <Link
                 to="/login"
                 style={{
-                  color: "#222", // CHANGED from #eebbc3 to dark text
+                  color: "#222",
                   textDecoration: "none",
                   fontWeight: "500",
                   fontSize: "1.1rem",
@@ -137,7 +157,7 @@ const Header = ({ cartItemCount }) => {
             <Link
               to="/login"
               style={{
-                color: "#222", // CHANGED from #eebbc3 to dark text
+                color: "#222",
                 textDecoration: "none",
                 fontWeight: "500",
                 fontSize: "1.1rem",

@@ -14,11 +14,11 @@ const accent = "#7c1c4b";
 const text = "#222";
 const faded = "#888";
 
-const Home = ({ addToCart }) => {
+const Home = ({ addToCart, searchTerm }) => { // <-- Receive searchTerm from App.js
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState("");
-  const [searchTerm, setSearchTerm] = useState("");
+  // The local searchTerm state has been removed
 
   useEffect(() => {
     fetch(BACKEND_URL)
@@ -30,6 +30,7 @@ const Home = ({ addToCart }) => {
       .catch(() => setLoading(false));
   }, []);
 
+  // Filter products by category AND the search term from the header
   const filteredProducts = products
     .filter(p => selectedCategory ? (p.category && p.category.toLowerCase() === selectedCategory.toLowerCase()) : true)
     .filter(p => searchTerm ? (p.name && p.name.toLowerCase().includes(searchTerm.toLowerCase())) : true);
@@ -48,30 +49,16 @@ const Home = ({ addToCart }) => {
           Order Alcohol & Snacks 24/7 in Indore
         </h2>
 
-        <div style={{ maxWidth: "500px", margin: "0 auto 2rem auto" }}>
-          <input
-            type="text"
-            placeholder="Search for products..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            style={{ 
-              width: "100%", 
-              padding: "12px", 
-              borderRadius: "8px", 
-              border: "1px solid #ddd",
-              fontSize: '1rem'
-            }}
-          />
-        </div>
+        {/* --- The old search bar div has been completely removed from here --- */}
         
-        {/* --- Professional Sticky Category Bar --- */}
-        <div className="category-bar">
+        {/* --- Sticky Category Bar - CORRECTED POSITION --- */}
+        {/* We set top to 140px to give enough space for the wrapped header on mobile */}
+        <div className="category-bar" style={{ top: '140px' }}>
           <div className="category-grid-container">
             <div className="category-grid">
               {categories.map(cat => (
                 <button
                   key={cat.name}
-                  // This line adds the "selected" class to the button that is clicked
                   className={`category-btn ${selectedCategory === cat.name ? 'selected' : ''}`}
                   onClick={() => setSelectedCategory(cat.name)}
                 >

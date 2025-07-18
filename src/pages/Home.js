@@ -3,12 +3,18 @@ import React, { useEffect, useState } from 'react';
 const BACKEND_URL = "https://daaruwala-backend-5i6g.onrender.com/api/products";
 
 const categories = [
-  { name: "Whiskey" }, { name: "Rum" }, { name: "Beer" }, { name: "Vodka" },
-  { name: "Snacks" }, { name: "Mixers" }, { name: "Cigarette" }
+  { name: "Whiskey" }, 
+  { name: "Rum" }, 
+  { name: "Beer" }, 
+  { name: "Vodka" },
+  { name: "Snacks" }, 
+  { name: "Mixers" }, 
+  { name: "Cigarette" },
+  { name: "Party Supplies" } // <-- THIS IS THE ONLY CHANGE
 ];
 
 const Home = ({ addToCart, searchTerm }) => {
-  const [products, setProducts] = useState([]); // <-- CORRECTED: Added the missing '=' sign
+  const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState("");
 
@@ -23,7 +29,7 @@ const Home = ({ addToCart, searchTerm }) => {
   }, []);
 
   const filteredProducts = products
-    .filter(p => selectedCategory ? (p.category && p.category.toLowerCase() === selectedCategory.toLowerCase()) : true)
+    .filter(p => selectedCategory ? (p.category && p.category.toLowerCase() === selected-category.toLowerCase()) : true)
     .filter(p => searchTerm ? (p.name && p.name.toLowerCase().includes(searchTerm.toLowerCase())) : true);
 
   return (

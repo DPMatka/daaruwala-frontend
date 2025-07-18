@@ -13,7 +13,7 @@ const categories = [
   { name: "Party Supplies" }
 ];
 
-const Home = ({ addToCart, searchTerm }) => {
+const Home = ({ cart, handleQuantityChange, searchTerm }) => { // <-- Receive cart and the new function
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -28,9 +28,8 @@ const Home = ({ addToCart, searchTerm }) => {
       .catch(() => setLoading(false));
   }, []);
 
-  // Filter products by category AND search term
   const filteredProducts = products
-    .filter(p => selectedCategory ? (p.category && p.category.toLowerCase() === selectedCategory.toLowerCase()) : true) // <-- THIS LINE IS NOW FIXED
+    .filter(p => selectedCategory ? (p.category && p.category.toLowerCase() === selectedCategory.toLowerCase()) : true)
     .filter(p => searchTerm ? (p.name && p.name.toLowerCase().includes(searchTerm.toLowerCase())) : true);
 
   return (
@@ -74,20 +73,48 @@ const Home = ({ addToCart, searchTerm }) => {
                 No products found.
               </div>
             ) : (
-              filteredProducts.map(product => (
-                <div key={product._id} style={{ background: '#fff', borderRadius: "12px", padding: "1rem", boxShadow: "0 2px 8px #0002", display: "flex", flexDirection: "column", alignItems: "center" }}>
-                  <img src={product.imageUrl || "https://via.placeholder.com/120x180?text=No+Image"} alt={product.name} style={{ width: "120px", height: "180px", objectFit: "cover", borderRadius: "8px" }} />
-                  <h2 style={{ margin: "1rem 0 0.5rem", fontSize: "1.1rem", color: '#7c1c4b' }}>{product.name}</h2>
-                  <div style={{ color: '#888', marginBottom: "0.5rem" }}>{product.category}</div>
-                  <div style={{ fontWeight: "bold", fontSize: "1.1rem", marginBottom: "0.5rem", color: '#222' }}>₹{product.price}</div>
-                  <button
-                    style={{ background: '#7c1c4b', color: '#fff', border: "none", borderRadius: "6px", padding: "0.5rem 1.2rem", cursor: "pointer", fontWeight: "bold" }}
-                    onClick={() => addToCart && addToCart(product)}
-                  >
-                    Add to Cart
-                  </button>
-                </div>
-              ))
+              filteredProducts.map(product => {
+                // Check if this product is in the cart
+                const cartItem = cart.find(item => item._id === product._id);
+                const quantityInCart = cartItem ? cartItem.quantity : 0;
+
+                return (
+                  <div key={product._id} style={{ background: '#fff', borderRadius: "12px", padding: "1rem", boxShadow: "0 2px 8px #0002", display: "flex", flexDirection: "column", alignItems: "center" }}>
+                    <img src={product.imageUrl || "https://via.placeholder.com/120x180?text=No+Image"} alt={product.name} style={{ width: "120px", height: "180px", objectFit: "cover", borderRadius: "8px" }} />
+                    <h2 style={{ margin: "1rem 0 0.5rem", fontSize: "1.1rem", color: '#7c1c4b' }}>{product.name}</h2>
+                    <div style={{ color: '#888', marginBottom: "0.5rem" }}>{product.category}</div>
+                    <div style={{ fontWeight: "bold", fontSize: "1.1rem", marginBottom: "0.5rem", color: '#222' }}>₹{product.price}</div>
+                    
+                    {/* --- NEW: Conditional Quantity Controller --- */}
+                    {quantityInCart > 0 ? (
+                      // If item is in cart, show +/- buttons
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginTop: '8px' }}>
+                        <button
+                          onClick={() => handleQuantityChange(product, quantityInCart - 1)}
+                          style={{ background: '#ddd', color: '#222', border: "none", borderRadius: "50%", width: '30px', height: '30px', fontWeight: "bold", cursor: "pointer" }}
+                        >
+                          -
+                        </button>
+                        <span style={{ fontWeight: 'bold', fontSize: '1.1rem' }}>{quantityInCart}</span>
+                        <button
+                          onClick={() => handleQuantityChange(product, quantityInCart + 1)}
+                          style={{ background: '#7c1c4b', color: '#fff', border: "none", borderRadius: "50%", width: '30px', height: '30px', fontWeight: "bold", cursor: "pointer" }}
+                        >
+                          +
+                        </button>
+                      </div>
+                    ) : (
+                      // If not in cart, show "Add to Cart" button
+                      <button
+                        style={{ background: '#7c1c4b', color: '#fff', border: "none", borderRadius: "6px", padding: "0.5rem 1.2rem", cursor: "pointer", fontWeight: "bold", marginTop: '8px' }}
+                        onClick={() => handleQuantityChange(product, 1)}
+                      >
+                        Add to Cart
+                      </button>
+                    )}
+                  </div>
+                );
+              })
             )}
           </div>
         )}

@@ -7,18 +7,10 @@ const categories = [
   { name: "Snacks" }, { name: "Mixers" }, { name: "Cigarette" }
 ];
 
-// White Theme Colors
-const mainBg = "#f7f7fa";
-const cardBg = "#fff";
-const accent = "#7c1c4b";
-const text = "#222";
-const faded = "#888";
-
-const Home = ({ addToCart, searchTerm }) => { // <-- Receives searchTerm from App.js
+const Home = ({ addToCart, searchTerm }) => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState("");
-  // The local searchTerm state has been correctly removed from here
 
   useEffect(() => {
     fetch(BACKEND_URL)
@@ -30,42 +22,29 @@ const Home = ({ addToCart, searchTerm }) => { // <-- Receives searchTerm from Ap
       .catch(() => setLoading(false));
   }, []);
 
-  // Filter products using the search term from the header
   const filteredProducts = products
     .filter(p => selectedCategory ? (p.category && p.category.toLowerCase() === selectedCategory.toLowerCase()) : true)
     .filter(p => searchTerm ? (p.name && p.name.toLowerCase().includes(searchTerm.toLowerCase())) : true);
 
   return (
-    <main style={{ background: mainBg, minHeight: "100vh", color: text }}>
+    <main style={{ background: '#f7f7fa', minHeight: "100vh", color: '#222' }}>
       <section style={{ padding: "2rem 1rem" }}>
-        <h2 style={{
-          textAlign: "center",
-          fontWeight: "bold",
-          fontSize: "2rem",
-          marginBottom: "2rem",
-          color: accent,
-          letterSpacing: "1px"
-        }}>
+        <h2 style={{ textAlign: "center", fontWeight: "bold", fontSize: "2rem", marginBottom: "2rem", color: '#7c1c4b' }}>
           Order Alcohol & Snacks 24/7 in Indore
         </h2>
-
-        {/* --- The old search bar div has been correctly removed from this file --- */}
         
-        {/* --- Sticky Category Bar - CORRECTED POSITION --- */}
-        {/* We set top to 140px to give enough space for the wrapped header on mobile */}
-        <div className="category-bar" style={{ top: '140px' }}>
-          <div className="category-grid-container">
-            <div className="category-grid">
-              {categories.map(cat => (
-                <button
-                  key={cat.name}
-                  className={`category-btn ${selectedCategory === cat.name ? 'selected' : ''}`}
-                  onClick={() => setSelectedCategory(cat.name)}
-                >
-                  {cat.name}
-                </button>
-              ))}
-            </div>
+        {/* --- Sticky Category Bar - SIMPLIFIED AND CORRECTED --- */}
+        <div className="category-bar"> 
+          <div className="category-grid">
+            {categories.map(cat => (
+              <button
+                key={cat.name}
+                className={`category-btn ${selectedCategory === cat.name ? 'selected' : ''}`}
+                onClick={() => setSelectedCategory(cat.name)}
+              >
+                {cat.name}
+              </button>
+            ))}
           </div>
         </div>
         
@@ -73,7 +52,7 @@ const Home = ({ addToCart, searchTerm }) => { // <-- Receives searchTerm from Ap
           <div style={{ textAlign: "center", marginBottom: "1.5rem" }}>
             <button
               onClick={() => setSelectedCategory("")}
-              style={{ background: '#ddd', color: text, border: "none", borderRadius: "6px", padding: "0.4rem 1.2rem", cursor: "pointer", fontWeight: "bold" }}
+              style={{ background: '#ddd', color: '#222', border: "none", borderRadius: "6px", padding: "0.4rem 1.2rem", cursor: "pointer", fontWeight: "bold" }}
             >
               Show All Products
             </button>
@@ -85,18 +64,18 @@ const Home = ({ addToCart, searchTerm }) => { // <-- Receives searchTerm from Ap
         ) : (
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "2rem", maxWidth: "1200px", margin: "0 auto", padding: '0 1rem' }}>
             {filteredProducts.length === 0 ? (
-              <div style={{ gridColumn: "1/-1", textAlign: "center", color: accent, fontSize: '1.2rem' }}>
+              <div style={{ gridColumn: "1/-1", textAlign: "center", color: '#7c1c4b', fontSize: '1.2rem' }}>
                 No products found.
               </div>
             ) : (
               filteredProducts.map(product => (
-                <div key={product._id} style={{ background: cardBg, borderRadius: "12px", padding: "1rem", boxShadow: "0 2px 8px #0002", display: "flex", flexDirection: "column", alignItems: "center" }}>
+                <div key={product._id} style={{ background: '#fff', borderRadius: "12px", padding: "1rem", boxShadow: "0 2px 8px #0002", display: "flex", flexDirection: "column", alignItems: "center" }}>
                   <img src={product.imageUrl || "https://via.placeholder.com/120x180?text=No+Image"} alt={product.name} style={{ width: "120px", height: "180px", objectFit: "cover", borderRadius: "8px" }} />
-                  <h2 style={{ margin: "1rem 0 0.5rem", fontSize: "1.1rem", color: accent }}>{product.name}</h2>
-                  <div style={{ color: faded, marginBottom: "0.5rem" }}>{product.category}</div>
-                  <div style={{ fontWeight: "bold", fontSize: "1.1rem", marginBottom: "0.5rem", color: text }}>₹{product.price}</div>
+                  <h2 style={{ margin: "1rem 0 0.5rem", fontSize: "1.1rem", color: '#7c1c4b' }}>{product.name}</h2>
+                  <div style={{ color: '#888', marginBottom: "0.5rem" }}>{product.category}</div>
+                  <div style={{ fontWeight: "bold", fontSize: "1.1rem", marginBottom: "0.5rem", color: '#222' }}>₹{product.price}</div>
                   <button
-                    style={{ background: accent, color: '#fff', border: "none", borderRadius: "6px", padding: "0.5rem 1.2rem", cursor: "pointer", fontWeight: "bold" }}
+                    style={{ background: '#7c1c4b', color: '#fff', border: "none", borderRadius: "6px", padding: "0.5rem 1.2rem", cursor: "pointer", fontWeight: "bold" }}
                     onClick={() => addToCart && addToCart(product)}
                   >
                     Add to Cart

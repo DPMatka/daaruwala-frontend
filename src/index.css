@@ -53,22 +53,30 @@ body {
 /* --- Professional Sticky Category Bar - CORRECTED --- */
 .category-bar {
   position: sticky;
-  /* We remove the fixed 'top' value from here */
+  top: 140px; /* Adjusts position for the taller mobile header */
   z-index: 99;
   background-color: #ffffff;
   padding: 1rem 0;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
   margin-bottom: 2.5rem;
+  /* THIS IS THE KEY FIX: We enable scrolling on the bar itself */
+  overflow-x: auto;
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none; /* Hide scrollbar on Firefox */
+}
+
+.category-bar::-webkit-scrollbar {
+  display: none; /* Hide scrollbar on Chrome/Safari */
 }
 
 .category-grid {
   max-width: 900px;
   margin: 0 auto;
   padding: 0 1rem;
-  display: flex;
-  flex-wrap: wrap;
+  display: flex; /* Use flexbox to keep items in a row */
   gap: 1rem;
-  justify-content: center;
+  /* We remove 'flex-wrap: wrap' so it scrolls instead of wrapping */
 }
 
 .category-btn {
@@ -81,6 +89,7 @@ body {
   font-size: 1rem;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
+  flex-shrink: 0; /* Prevents buttons from squashing on mobile */
 }
 
 .category-btn.selected,
@@ -88,33 +97,4 @@ body {
   background: #7c1c4b;
   color: #fff;
   border-color: #7c1c4b;
-}
-
-/* --- Mobile Horizontal Scrolling Categories --- */
-@media (max-width: 768px) {
-  /* THIS IS THE NEW FIX: We now set the sticky position inside the media query */
-  .category-bar {
-    top: 130px; /* A fixed value that works for the mobile header */
-  }
-
-  .category-grid-container {
-    overflow-x: auto;
-    white-space: nowrap;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-  }
-
-  .category-grid-container::-webkit-scrollbar {
-    display: none;
-  }
-
-  .category-grid {
-    display: inline-flex;
-    padding: 0 1rem;
-  }
-
-  .category-btn {
-    flex: 0 0 auto;
-    width: 120px;
-  }
 }

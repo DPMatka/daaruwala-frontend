@@ -2,12 +2,12 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const Header = ({ cartItemCount }) => {
-  // Check if user is logged in
   const user = localStorage.getItem("user");
 
   return (
-    <header
-      className="sticky-header"
+    // CHANGE #1: Add className="sticky-header"
+    <header 
+      className="sticky-header" 
       style={{
         position: "sticky",
         top: 0,
@@ -41,7 +41,10 @@ const Header = ({ cartItemCount }) => {
         >
           DaaruWala
         </Link>
-        <nav
+
+        {/* CHANGE #2: Add className="header-nav" */}
+        <nav 
+          className="header-nav"
           style={{
             display: "flex",
             gap: "1.2rem",

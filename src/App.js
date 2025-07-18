@@ -14,14 +14,10 @@ import OrderHistory from './pages/OrderHistory';
 
 const App = () => {
   const [cart, setCart] = useState([]);
-  // Use state to force re-render after login
   const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem("user"));
-  const user = JSON.parse(localStorage.getItem("user"));
-
-  // Add to cart with quantity
+  
   const addToCart = (product) => {
     const existingProduct = cart.find((item) => item._id === product._id);
-
     if (existingProduct) {
       setCart(prevCart =>
         prevCart.map(item =>
@@ -33,18 +29,38 @@ const App = () => {
     } else {
       setCart(prevCart => [...prevCart, { ...product, quantity: 1 }]);
     }
-
     alert(`✅ ${product.name} added to cart!`);
   };
 
-  // Clear cart after order placed
   const clearCart = () => setCart([]);
 
   return (
     <Router>
       <Header cartItemCount={cart.length} />
+
+      {/* --- Floating Social Icons --- */}
+      <div className="social-icons">
+        <a 
+          href="https://wa.me/YOUR_PHONE_NUMBER" // <-- IMPORTANT: Replace with your number
+          target="_blank" 
+          rel="noopener noreferrer" 
+          className="social-icon whatsapp"
+          aria-label="Chat on WhatsApp"
+        >
+          💬
+        </a>
+        <a 
+          href="https://t.me/YOUR_TELEGRAM_USERNAME" // <-- IMPORTANT: Replace with your username
+          target="_blank" 
+          rel="noopener noreferrer" 
+          className="social-icon telegram"
+          aria-label="Contact on Telegram"
+        >
+          ➤
+        </a>
+      </div>
+      
       <Routes>
-        {/* If not logged in, always show Login page */}
         {!isLoggedIn ? (
           <>
             <Route path="*" element={<Login onLogin={() => setIsLoggedIn(true)} />} />

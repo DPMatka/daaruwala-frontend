@@ -15,7 +15,7 @@ import OrderHistory from './pages/OrderHistory';
 const App = () => {
   const [cart, setCart] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem("user"));
-  const [searchTerm, setSearchTerm] = useState(""); // <-- Search state is managed here
+  const [searchTerm, setSearchTerm] = useState(""); // <-- This line is the only addition here
 
   const addToCart = (product) => {
     const existingProduct = cart.find((item) => item._id === product._id);
@@ -37,7 +37,7 @@ const App = () => {
 
   return (
     <Router>
-      {/* We pass the search state and function to the Header */}
+      {/* CHANGE #1: We pass the search state down to the Header component */}
       <Header 
         cartItemCount={cart.length} 
         searchTerm={searchTerm} 
@@ -76,7 +76,7 @@ const App = () => {
           </>
         ) : (
           <>
-            {/* We pass the search term down to the Home page */}
+            {/* CHANGE #2: We pass the searchTerm down to the Home page so it can filter products */}
             <Route path="/" element={<Home addToCart={addToCart} searchTerm={searchTerm} />} />
             <Route path="/product/:productId" element={<ProductDetail addToCart={addToCart} />} />
             <Route path="/login" element={<Login onLogin={() => setIsLoggedIn(true)} />} />

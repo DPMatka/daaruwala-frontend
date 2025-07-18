@@ -14,7 +14,7 @@ const accent = "#7c1c4b";
 const text = "#222";
 const faded = "#888";
 
-const Home = ({ addToCart, searchTerm }) => { // <-- It now receives searchTerm from App.js
+const Home = ({ addToCart, searchTerm }) => { // <-- Receives searchTerm from App.js
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -51,7 +51,8 @@ const Home = ({ addToCart, searchTerm }) => { // <-- It now receives searchTerm 
 
         {/* --- The old search bar div has been correctly removed from this file --- */}
         
-        {/* --- Sticky Category Bar with Mobile Fix --- */}
+        {/* --- Sticky Category Bar - CORRECTED POSITION --- */}
+        {/* We set top to 140px to give enough space for the wrapped header on mobile */}
         <div className="category-bar" style={{ top: '140px' }}>
           <div className="category-grid-container">
             <div className="category-grid">

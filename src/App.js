@@ -83,7 +83,7 @@ const App = () => {
           </>
         )}
       </Routes>
-    </Router> // <-- THIS WAS THE MISSING CLOSING TAG
+    </Router>
   );
 };
 

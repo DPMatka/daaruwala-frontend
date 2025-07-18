@@ -44,21 +44,16 @@ body {
   border-radius: 50%;
   text-decoration: none;
   box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-  transition: transform 0.2s;
-}
-
-.social-icon:hover {
-  transform: scale(1.1);
 }
 
 .whatsapp { background-color: #25D366; }
 .telegram { background-color: #0088cc; }
 
 
-/* --- Professional Sticky Category Bar --- */
+/* --- Professional Sticky Category Bar - CORRECTED --- */
 .category-bar {
   position: sticky;
-  top: 80px;
+  /* We remove the fixed 'top' value from here */
   z-index: 99;
   background-color: #ffffff;
   padding: 1rem 0;
@@ -95,11 +90,11 @@ body {
   border-color: #7c1c4b;
 }
 
-/* Mobile styles for horizontal scrolling categories */
+/* --- Mobile Horizontal Scrolling Categories --- */
 @media (max-width: 768px) {
-  /* THIS IS THE ONLY CHANGE: Adjust the sticky position for the taller mobile header */
+  /* THIS IS THE NEW FIX: We now set the sticky position inside the media query */
   .category-bar {
-    top: 140px; 
+    top: 130px; /* A fixed value that works for the mobile header */
   }
 
   .category-grid-container {

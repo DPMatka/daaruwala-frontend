@@ -50,46 +50,36 @@ body {
 .telegram { background-color: #0088cc; }
 
 
-/* --- Professional Sticky Category Bar - CORRECTED --- */
+/* --- Professional Sticky Category Bar --- */
 .category-bar {
   position: sticky;
-  top: 140px; /* Adjusts position for the taller mobile header */
+  top: 140px; 
   z-index: 99;
   background-color: #ffffff;
   padding: 1rem 0;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
   margin-bottom: 2.5rem;
-  /* THIS IS THE KEY FIX: We enable scrolling on the bar itself */
-  overflow-x: auto;
-  white-space: nowrap;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none; /* Hide scrollbar on Firefox */
-}
-
-.category-bar::-webkit-scrollbar {
-  display: none; /* Hide scrollbar on Chrome/Safari */
 }
 
 .category-grid {
   max-width: 900px;
   margin: 0 auto;
   padding: 0 1rem;
-  display: flex; /* Use flexbox to keep items in a row */
-  gap: 1rem;
-  /* We remove 'flex-wrap: wrap' so it scrolls instead of wrapping */
+  display: grid; /* Use grid for perfect alignment */
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); /* Responsive columns on desktop */
+  gap: 1rem; /* Space between buttons */
 }
 
 .category-btn {
   background: #fff;
   color: #7c1c4b;
   border: 1px solid #eee;
-  border-radius: 20px;
-  padding: 0.5rem 1.5rem;
+  border-radius: 10px; 
+  padding: 0.75rem 1rem;
   font-weight: 600;
   font-size: 1rem;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
-  flex-shrink: 0; /* Prevents buttons from squashing on mobile */
 }
 
 .category-btn.selected,
@@ -97,4 +87,13 @@ body {
   background: #7c1c4b;
   color: #fff;
   border-color: #7c1c4b;
+}
+
+/* --- NEW: Simple Two-Column Grid on Mobile --- */
+/* This code only affects screens smaller than a tablet (768px) */
+@media (max-width: 768px) {
+  .category-grid {
+    /* This creates the 2-column layout you wanted */
+    grid-template-columns: 1fr 1fr; 
+  }
 }

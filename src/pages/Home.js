@@ -8,7 +8,7 @@ const categories = [
 ];
 
 const Home = ({ addToCart, searchTerm }) => {
-  const [products, setProducts] = useState([]);
+  const [products, setProducts]_useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState("");
 

@@ -50,10 +50,11 @@ body {
 .telegram { background-color: #0088cc; }
 
 
-/* --- Professional Sticky Category Bar --- */
+/* --- Professional Sticky Category Bar - CORRECTED --- */
 .category-bar {
   position: sticky;
-  top: 140px; 
+  /* THIS IS THE KEY FIX: We now use a variable that is set by JavaScript */
+  top: calc(var(--header-height, 80px) + 1px);
   z-index: 99;
   background-color: #ffffff;
   padding: 1rem 0;
@@ -65,16 +66,16 @@ body {
   max-width: 900px;
   margin: 0 auto;
   padding: 0 1rem;
-  display: grid; /* Use grid for perfect alignment */
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); /* Responsive columns on desktop */
-  gap: 1rem; /* Space between buttons */
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 1rem;
 }
 
 .category-btn {
   background: #fff;
   color: #7c1c4b;
   border: 1px solid #eee;
-  border-radius: 10px; 
+  border-radius: 10px;
   padding: 0.75rem 1rem;
   font-weight: 600;
   font-size: 1rem;
@@ -89,11 +90,9 @@ body {
   border-color: #7c1c4b;
 }
 
-/* --- NEW: Simple Two-Column Grid on Mobile --- */
-/* This code only affects screens smaller than a tablet (768px) */
+/* --- Simple Two-Column Grid on Mobile --- */
 @media (max-width: 768px) {
   .category-grid {
-    /* This creates the 2-column layout you wanted */
     grid-template-columns: 1fr 1fr; 
   }
 }

@@ -10,7 +10,7 @@ const categories = [
   { name: "Snacks" }, 
   { name: "Mixers" }, 
   { name: "Cigarette" },
-  { name: "Party Supplies" } // <-- THIS IS THE ONLY CHANGE
+  { name: "Party Supplies" }
 ];
 
 const Home = ({ addToCart, searchTerm }) => {
@@ -28,8 +28,9 @@ const Home = ({ addToCart, searchTerm }) => {
       .catch(() => setLoading(false));
   }, []);
 
+  // Filter products by category AND search term
   const filteredProducts = products
-    .filter(p => selectedCategory ? (p.category && p.category.toLowerCase() === selected-category.toLowerCase()) : true)
+    .filter(p => selectedCategory ? (p.category && p.category.toLowerCase() === selectedCategory.toLowerCase()) : true) // <-- THIS LINE IS NOW FIXED
     .filter(p => searchTerm ? (p.name && p.name.toLowerCase().includes(searchTerm.toLowerCase())) : true);
 
   return (

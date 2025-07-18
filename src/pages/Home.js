@@ -8,7 +8,7 @@ const categories = [
 ];
 
 const Home = ({ addToCart, searchTerm }) => {
-  const [products, setProducts]_useState([]);
+  const [products, setProducts] = useState([]); // <-- CORRECTED: Added the missing '=' sign
   const [loading, setLoading] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState("");
 
@@ -33,7 +33,6 @@ const Home = ({ addToCart, searchTerm }) => {
           Order Alcohol & Snacks 24/7 in Indore
         </h2>
         
-        {/* --- Sticky Category Bar - SIMPLIFIED AND CORRECTED --- */}
         <div className="category-bar"> 
           <div className="category-grid">
             {categories.map(cat => (

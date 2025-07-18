@@ -50,10 +50,9 @@ body {
 .telegram { background-color: #0088cc; }
 
 
-/* --- Professional Sticky Category Bar - CORRECTED --- */
+/* --- Professional Sticky Category Bar --- */
 .category-bar {
   position: sticky;
-  /* THIS IS THE KEY FIX: We now use a variable that is set by JavaScript */
   top: calc(var(--header-height, 80px) + 1px);
   z-index: 99;
   background-color: #ffffff;
@@ -90,9 +89,26 @@ body {
   border-color: #7c1c4b;
 }
 
-/* --- Simple Two-Column Grid on Mobile --- */
+/* --- NEW: Horizontal Scrolling Categories on Mobile --- */
 @media (max-width: 768px) {
+  .category-bar {
+    padding: 0.5rem 0; /* Make the bar a bit thinner on mobile */
+  }
+
   .category-grid {
-    grid-template-columns: 1fr 1fr; 
+    display: flex; /* Change from grid to flex */
+    overflow-x: auto; /* Enable horizontal scrolling */
+    white-space: nowrap; /* Prevent items from wrapping */
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+    scrollbar-width: none; /* Hide scrollbar on Firefox */
+    padding-bottom: 1rem; /* Add some space below for the shadow */
+  }
+
+  .category-grid::-webkit-scrollbar {
+    display: none; /* Hide scrollbar on Chrome/Safari */
+  }
+
+  .category-btn {
+    flex-shrink: 0; /* Stop buttons from shrinking */
   }
 }

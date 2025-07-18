@@ -48,7 +48,6 @@ const Home = ({ addToCart }) => {
           Order Alcohol & Snacks 24/7 in Indore
         </h2>
 
-        {/* --- Search Bar --- */}
         <div style={{ maxWidth: "500px", margin: "0 auto 2rem auto" }}>
           <input
             type="text"
@@ -65,23 +64,16 @@ const Home = ({ addToCart }) => {
           />
         </div>
         
-        {/* --- Sticky Category Bar --- */}
-        <div style={{ position: "sticky", top: 80, zIndex: 99, background: mainBg, padding: "12px 0", marginBottom: "2.5rem", boxShadow: "0 4px 6px -1px rgba(0,0,0,0.1)" }}>
-          {/* This container enables horizontal scrolling on mobile */}
+        {/* --- Professional Sticky Category Bar --- */}
+        <div className="category-bar">
           <div className="category-grid-container">
-            <div className="category-grid" style={{ maxWidth: "900px", margin: "0 auto" }}>
+            <div className="category-grid">
               {categories.map(cat => (
                 <button
                   key={cat.name}
-                  className="category-btn"
+                  // This line adds the "selected" class to the button that is clicked
+                  className={`category-btn ${selectedCategory === cat.name ? 'selected' : ''}`}
                   onClick={() => setSelectedCategory(cat.name)}
-                  style={{
-                    background: selectedCategory === cat.name ? accent : cardBg,
-                    color: selectedCategory === cat.name ? '#fff' : accent,
-                    border: `2px solid ${selectedCategory === cat.name ? accent : '#eee'}`,
-                    borderRadius: "10px", padding: "1rem 0", fontWeight: "bold", fontSize: "1.1rem", cursor: "pointer", transition: "all 0.2s",
-                    margin: '0 5px' // Adds a little space between buttons
-                  }}
                 >
                   {cat.name}
                 </button>

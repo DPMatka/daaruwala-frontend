@@ -11,17 +11,16 @@ body {
   position: sticky;
   top: 0;
   z-index: 100;
-  background: #fff;
-  border-bottom: 1px solid #eee;
+  background: #fff; /* White header */
+  border-bottom: 1px solid #eee; /* Light border */
   padding: 0.5rem 1rem;
 }
 
-/* --- Mobile-Friendly Header Navigation --- */
 .header-nav {
   display: flex;
   gap: 1.5rem;
   align-items: center;
-  flex-wrap: wrap; /* This makes links wrap on small screens */
+  flex-wrap: wrap;
   justify-content: flex-end;
 }
 
@@ -45,43 +44,78 @@ body {
   border-radius: 50%;
   text-decoration: none;
   box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-  transition: transform 0.2s; /* Add a nice hover effect */
+  transition: transform 0.2s;
 }
 
 .social-icon:hover {
   transform: scale(1.1);
 }
 
-.whatsapp {
-  background-color: #25D366;
+.whatsapp { background-color: #25D366; }
+.telegram { background-color: #0088cc; }
+
+
+/* --- NEW: Professional Sticky Category Bar --- */
+.category-bar {
+  position: sticky;
+  top: 80px; /* This makes it stick right below your header */
+  z-index: 99;
+  background-color: #ffffff;
+  padding: 1rem 0;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2.5rem;
 }
 
-.telegram {
-  background-color: #0088cc;
+.category-grid {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  display: flex;
+  flex-wrap: wrap; /* Allows items to wrap to the next line */
+  gap: 1rem; /* Space between buttons */
+  justify-content: center; /* Center the buttons */
 }
 
-/* --- NEW: Mobile-Friendly Horizontal Scrolling Category Bar --- */
-/* This code only affects screens smaller than a tablet (768px) */
+.category-btn {
+  background: #fff;
+  color: #7c1c4b;
+  border: 1px solid #eee;
+  border-radius: 20px; /* Rounded pill shape */
+  padding: 0.5rem 1.5rem; /* Padding for a nice size */
+  font-weight: 600; /* Bolder font */
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+/* Style for the selected button */
+.category-btn.selected,
+.category-btn:hover {
+  background: #7c1c4b;
+  color: #fff;
+  border-color: #7c1c4b;
+}
+
+/* Mobile styles for horizontal scrolling categories */
 @media (max-width: 768px) {
   .category-grid-container {
-    overflow-x: auto; /* Enable horizontal scrolling */
-    white-space: nowrap; /* Prevent items from wrapping down */
-    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
-    scrollbar-width: none; /* Hide scrollbar on Firefox */
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
   }
 
-  /* Hide scrollbar on Chrome/Safari */
   .category-grid-container::-webkit-scrollbar {
     display: none;
   }
 
   .category-grid {
-    display: inline-flex; /* Display items in a single row */
-    padding: 0 1rem; /* Add some space at the start and end */
+    display: inline-flex;
+    padding: 0 1rem;
   }
 
   .category-btn {
-    flex: 0 0 auto; /* Stop buttons from shrinking */
-    width: 120px; /* Give each button a consistent width */
+    flex: 0 0 auto;
+    width: 120px;
   }
 }

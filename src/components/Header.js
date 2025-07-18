@@ -5,15 +5,16 @@ const Header = ({ cartItemCount }) => {
   const user = localStorage.getItem("user");
 
   return (
-    // CHANGE #1: Add className="sticky-header"
+    // The className "sticky-header" will handle the white background and sticky position
     <header 
       className="sticky-header" 
       style={{
+        // These inline styles are kept as you had them
         position: "sticky",
         top: 0,
         zIndex: 100,
-        background: "#18181b",
-        borderBottom: "1px solid #232946",
+        background: "#fff", // CHANGED from #18181b to white
+        borderBottom: "1px solid #eee", // CHANGED from #232946 to light grey
         padding: "0.5rem 0",
         marginBottom: "2rem",
         width: "100%",
@@ -34,7 +35,7 @@ const Header = ({ cartItemCount }) => {
           style={{
             fontWeight: "bold",
             fontSize: "1.7rem",
-            color: "#eebbc3",
+            color: "#7c1c4b", // CHANGED from #eebbc3 to dark red/purple
             textDecoration: "none",
             letterSpacing: "1px",
           }}
@@ -42,7 +43,7 @@ const Header = ({ cartItemCount }) => {
           DaaruWala
         </Link>
 
-        {/* CHANGE #2: Add className="header-nav" */}
+        {/* The className "header-nav" makes the links wrap on mobile */}
         <nav 
           className="header-nav"
           style={{
@@ -51,11 +52,10 @@ const Header = ({ cartItemCount }) => {
             alignItems: "center",
           }}
         >
-          {/* Cart FIRST for easy access */}
           <Link
             to="/cart"
             style={{
-              color: "#eebbc3",
+              color: "#222", // CHANGED from #eebbc3 to dark text
               textDecoration: "none",
               position: "relative",
               fontSize: "1.5rem",
@@ -85,7 +85,7 @@ const Header = ({ cartItemCount }) => {
           <Link
             to="/"
             style={{
-              color: "#eebbc3",
+              color: "#222", // CHANGED from #eebbc3 to dark text
               textDecoration: "none",
               fontWeight: "500",
               fontSize: "1.1rem",
@@ -98,7 +98,7 @@ const Header = ({ cartItemCount }) => {
               <Link
                 to="/order-history"
                 style={{
-                  color: "#eebbc3",
+                  color: "#222", // CHANGED from #eebbc3 to dark text
                   textDecoration: "none",
                   fontWeight: "500",
                   fontSize: "1.1rem",
@@ -109,7 +109,7 @@ const Header = ({ cartItemCount }) => {
               <Link
                 to="/profile"
                 style={{
-                  color: "#eebbc3",
+                  color: "#222", // CHANGED from #eebbc3 to dark text
                   textDecoration: "none",
                   fontWeight: "500",
                   fontSize: "1.1rem",
@@ -120,7 +120,7 @@ const Header = ({ cartItemCount }) => {
               <Link
                 to="/login"
                 style={{
-                  color: "#eebbc3",
+                  color: "#222", // CHANGED from #eebbc3 to dark text
                   textDecoration: "none",
                   fontWeight: "500",
                   fontSize: "1.1rem",
@@ -137,7 +137,7 @@ const Header = ({ cartItemCount }) => {
             <Link
               to="/login"
               style={{
-                color: "#eebbc3",
+                color: "#222", // CHANGED from #eebbc3 to dark text
                 textDecoration: "none",
                 fontWeight: "500",
                 fontSize: "1.1rem",

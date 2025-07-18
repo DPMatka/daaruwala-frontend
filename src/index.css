@@ -1,19 +1,19 @@
-/* --- General Body Styles (Dark Theme) --- */
+/* --- General Body Styles (White Theme) --- */
 body {
-  background: #18181b; /* Dark background */
-  color: #fff; /* Light text */
+  background: #f7f7fa; /* A professional, light grey background */
+  color: #222; /* Dark text for readability */
   font-family: 'Poppins', Arial, sans-serif;
   margin: 0;
   padding: 0;
 }
 
-/* --- Sticky Header --- */
+/* --- Sticky Header (White) --- */
 .sticky-header {
   position: sticky;
   top: 0;
   z-index: 100;
-  background: #18181b; /* Match body background */
-  border-bottom: 1px solid #232946; /* Subtle border */
+  background: #fff; /* White header */
+  border-bottom: 1px solid #eee; /* Light border */
   padding: 0.5rem 1rem; /* Padding for mobile */
 }
 
@@ -28,8 +28,9 @@ body {
 }
 
 /* --- Social Icons (WhatsApp & Telegram) --- */
+/* These styles remain the same as they look good on any theme */
 .social-icons {
-  position: fixed; /* Keep icons in place when scrolling */
+  position: fixed;
   bottom: 20px;
   right: 20px;
   display: flex;
@@ -62,4 +63,30 @@ body {
 
 .telegram {
   background-color: #0088cc;
+}
+
+/* --- NEW: Mobile-Friendly Horizontal Scrolling Category Bar --- */
+/* This code only affects screens smaller than a tablet (768px) */
+@media (max-width: 768px) {
+  .category-grid-container {
+    overflow-x: auto; /* Enable horizontal scrolling */
+    white-space: nowrap; /* Prevent items from wrapping down */
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+    scrollbar-width: none; /* Hide scrollbar on Firefox */
+  }
+
+  /* Hide scrollbar on Chrome/Safari */
+  .category-grid-container::-webkit-scrollbar {
+    display: none;
+  }
+
+  .category-grid {
+    display: inline-flex; /* Display items in a single row */
+    padding: 0 1rem; /* Add some space at the start and end */
+  }
+
+  .category-btn {
+    flex: 0 0 auto; /* Stop buttons from shrinking */
+    width: 120px; /* Give each button a consistent width */
+  }
 }

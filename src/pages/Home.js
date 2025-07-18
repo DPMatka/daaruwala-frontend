@@ -14,11 +14,11 @@ const accent = "#7c1c4b";
 const text = "#222";
 const faded = "#888";
 
-const Home = ({ addToCart, searchTerm }) => { // <-- Receive searchTerm from App.js
+const Home = ({ addToCart, searchTerm }) => { // <-- It now receives searchTerm from App.js
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState("");
-  // The local searchTerm state has been removed
+  // The local searchTerm state has been correctly removed from here
 
   useEffect(() => {
     fetch(BACKEND_URL)
@@ -30,7 +30,7 @@ const Home = ({ addToCart, searchTerm }) => { // <-- Receive searchTerm from App
       .catch(() => setLoading(false));
   }, []);
 
-  // Filter products by category AND the search term from the header
+  // Filter products using the search term from the header
   const filteredProducts = products
     .filter(p => selectedCategory ? (p.category && p.category.toLowerCase() === selectedCategory.toLowerCase()) : true)
     .filter(p => searchTerm ? (p.name && p.name.toLowerCase().includes(searchTerm.toLowerCase())) : true);
@@ -49,10 +49,9 @@ const Home = ({ addToCart, searchTerm }) => { // <-- Receive searchTerm from App
           Order Alcohol & Snacks 24/7 in Indore
         </h2>
 
-        {/* --- The old search bar div has been completely removed from here --- */}
+        {/* --- The old search bar div has been correctly removed from this file --- */}
         
-        {/* --- Sticky Category Bar - CORRECTED POSITION --- */}
-        {/* We set top to 140px to give enough space for the wrapped header on mobile */}
+        {/* --- Sticky Category Bar with Mobile Fix --- */}
         <div className="category-bar" style={{ top: '140px' }}>
           <div className="category-grid-container">
             <div className="category-grid">

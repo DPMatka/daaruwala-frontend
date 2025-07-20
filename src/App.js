@@ -54,7 +54,7 @@ const App = () => {
           </svg>
         </a>
         <a 
-          href="https://t.me/idaruwala"
+          href="https://t.me/daaruwala"
           target="_blank" 
           rel="noopener noreferrer" 
           className="social-icon telegram"

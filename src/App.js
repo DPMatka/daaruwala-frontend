@@ -43,7 +43,7 @@ const App = () => {
 
       <div className="social-icons">
         <a 
-          href="https://wa.me/YOUR_PHONE_NUMBER"
+          href="https://wa.me/918407952886"
           target="_blank" 
           rel="noopener noreferrer" 
           className="social-icon whatsapp"
